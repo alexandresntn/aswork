@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AS/W Studio® · Design Project Management</title>
+<meta name="description" content="Design Project Management for founders and SMEs. Brand identity, digital product, UX/UI and production design, managed end to end.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:     #FFFFFF;
+    --dark:   #0D0D0D;
+    --mid:    #757575;
+    --border: #E8E8E8;
+    --display: 'Inter Tight', 'Inter', system-ui, sans-serif;
+    --sans:    'Inter', system-ui, sans-serif;
+    --ease:    cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--dark);
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--dark); color: var(--bg); }
+  img { -webkit-user-drag: none; }
+
+  /* ── GRAIN OVERLAY ───────────────────────── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    pointer-events: none;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ── PRELOADER ───────────────────────────── */
+  .loader {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s var(--ease), visibility 0.8s;
+  }
+  .loader.done { opacity: 0; visibility: hidden; }
+  .loader span {
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 0.25; } 50% { opacity: 1; } }
+
+  /* ── REVEAL SYSTEM ───────────────────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(44px);
+    transition: opacity 1s var(--ease), transform 1s var(--ease);
+    transition-delay: var(--d, 0s);
+  }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  .line-mask { display: block; overflow: hidden; }
+  .line-mask > span {
+    display: block;
+    transform: translateY(112%);
+    transition: transform 1.2s var(--ease);
+    transition-delay: var(--d, 0s);
+  }
+  .loaded .line-mask > span { transform: translateY(0); }
+
+  /* ── NAV ─────────────────────────────────── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 48px;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid transparent;
+    transition: transform 0.5s var(--ease), border-color 0.4s;
+  }
+  nav.scrolled { border-bottom-color: var(--border); }
+  nav.hidden { transform: translateY(-100%); }
+  .nav-logo {
+    font-family: var(--display);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--dark);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    position: relative;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--dark);
+    text-decoration: none;
+    padding-bottom: 3px;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 100%; height: 1px;
+    background: var(--dark);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.45s var(--ease);
+  }
+  .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+  .nav-cta {
+    position: relative;
+    display: inline-block;
+    padding: 8px 20px;
+    color: var(--bg);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 100px;
+    overflow: hidden;
+    z-index: 1;
+  }
+  .nav-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--dark);
+    border-radius: 100px;
+    z-index: -1;
+    transition: transform 0.45s var(--ease);
+  }
+  .nav-cta:hover::before { transform: scale(1.06); }
+
+  /* ── HERO ─────────────────────────────────── */
+  .hero {
+    min-height: 100svh;
+    padding: 0 48px 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .hero-tag {
+    position: absolute;
+    top: 108px; left: 48px;
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: var(--mid);
+    max-width: 320px;
+    line-height: 1.5;
+  }
+  .hero-title {
+    font-family: var(--display);
+    font-size: clamp(38px, 6vw, 88px);
+    font-weight: 400;
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    max-width: 1200px;
+    text-wrap: balance;
+  }
+
+  /* ── SECTION BASE ─────────────��───────────── */
+  .section {
+    padding: 110px 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 56px;
+  }
+  .section-label {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+  .section-num {
+    font-family: var(--display);
+    font-size: 13px;
+    color: var(--mid);
+  }
+
+  /* ── WORKS ────────────────────────────────── */
+  .works-scroll {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    cursor: grab;
+    user-select: none;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 4px;
+  }
+  .works-scroll::-webkit-scrollbar { display: none; }
+  .works-scroll:active { cursor: grabbing; }
+  .work-card {
+    flex: 0 0 auto;
+    width: 360px;
+    text-decoration: none;
+    color: var(--dark);
+  }
+  .work-card:first-child { width: 420px; }
+  .work-card:last-child  { width: 280px; }
+  .work-thumb {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: #F0F0F0;
+    overflow: hidden;
+    margin-bottom: 16px;
+    display: block;
+    position: relative;
+    clip-path: inset(0 0 0 0);
+  }
+  .reveal .work-thumb { clip-path: inset(0 0 100% 0); transition: clip-path 1.2s var(--ease); transition-delay: var(--d, 0s); }
+  .reveal.in .work-thumb { clip-path: inset(0 0 0% 0); }
+  .work-thumb img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.08);
+    transition: transform 1.2s var(--ease);
+  }
+  .reveal.in .work-thumb img { transform: scale(1); }
+  .work-card:hover .work-thumb img { transform: scale(1.05); }
+  .work-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 2px;
+  }
+  .work-name {
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .work-type {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+  /* ── MARQUEE ─────────────────────────────── */
+  .marquee-wrap {
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+  .marquee-track {
+    display: flex;
+    white-space: nowrap;
+    flex-shrink: 0;
+    animation: slide 26s linear infinite;
+  }
+  .marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+  .marquee-item {
+    padding: 14px 44px;
+    font-size: 11px;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--mid);
+    border-right: 1px solid var(--border);
+    flex-shrink: 0;
+    transition: color 0.3s;
+  }
+  .marquee-item:hover { color: var(--dark); }
+  @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ── ABOUT ───────────────────────────────── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+  .about-text .section-label { display: block; margin-bottom: 32px; }
+  .about-text h2 {
+    font-family: var(--display);
+    font-size: clamp(36px, 3.8vw, 58px);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    margin-bottom: 30px;
+    text-wrap: balance;
+  }
+  .about-text p {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: #444444;
+    margin-bottom: 16px;
+    max-width: 480px;
+  }
+  .about-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 22px;
+    font-size: 11px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--dark);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 3px;
+    transition: gap 0.35s var(--ease), opacity 0.2s;
+  }
+  .about-link:hover { gap: 16px; opacity: 0.6; }
+  .about-img-wrap {
+    aspect-ratio: 1/1;
+    max-width: 420px;
+    justify-self: end;
+    background: #F0F0F0;
+    overflow: hidden;
+  }
+  .about-img-wrap img {
+    width: 100%; height: 118%;
+    object-fit: cover;
+    display: block;
+    will-change: transform;
+  }
+
+  /* ── SERVICES ────────────────────────────── */
+  .service-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 1.2fr;
+    gap: 40px;
+    padding: 44px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+    transition: background 0.4s;
+  }
+  .service-row:first-of-type { border-top: 1px solid var(--border); }
+  .service-num {
+    font-family: var(--display);
+    font-size: 13px;
+    color: var(--mid);
+    padding-top: 6px;
+  }
+  .service-name {
+    font-family: var(--display);
+    font-size: clamp(22px, 2.4vw, 32px);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+  .service-desc {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: #444444;
+    max-width: 520px;
+  }
+
+  /* ── NEWSLETTER ──────────────────────────── */
+  .newsletter {
+    text-align: center;
+    padding: 130px 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .newsletter h2 {
+    font-family: var(--display);
+    font-size: clamp(28px, 3.6vw, 48px);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    max-width: 680px;
+    margin: 0 auto 14px;
+    text-wrap: balance;
+  }
+  .newsletter p {
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--mid);
+    margin-bottom: 40px;
+  }
+  .nl-form {
+    display: flex;
+    max-width: 440px;
+    margin: 0 auto;
+    border: 1px solid var(--dark);
+    border-radius: 100px;
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+  }
+  .nl-form:focus-within { box-shadow: 0 0 0 3px rgba(13,13,13,0.08); }
+  .nl-form input {
+    flex: 1;
+    padding: 15px 24px;
+    background: transparent;
+    border: none;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--dark);
+    outline: none;
+  }
+  .nl-form input::placeholder { color: var(--mid); }
+  .nl-form button {
+    padding: 15px 26px;
+    background: var(--dark);
+    color: var(--bg);
+    border: none;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .nl-form button:hover { opacity: 0.78; }
+
+  /* ── CTA BANNER ──────────────────────────── */
+  .cta-banner {
+    padding: 140px 48px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .cta-banner a {
+    font-family: var(--display);
+    font-size: clamp(44px, 8vw, 120px);
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    color: var(--dark);
+    text-decoration: none;
+    line-height: 1.05;
+    display: inline-block;
+    transition: opacity 0.3s;
+  }
+  .cta-banner a:hover { opacity: 0.45; }
+  .cta-banner p {
+    margin-top: 20px;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  /* ── FOOTER ──────────────────────────────── */
+  footer { padding: 80px 48px 0; }
+  .footer-main {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 70px;
+  }
+  .footer-logo {
+    font-family: var(--display);
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--dark);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 40px;
+  }
+  .footer-pics { display: flex; gap: 8px; }
+  .footer-pic {
+    flex: 1;
+    aspect-ratio: 2/3;
+    background: #F0F0F0;
+    overflow: hidden;
+  }
+  .footer-pic img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(0.4);
+    transition: filter 0.6s, transform 0.9s var(--ease);
+  }
+  .footer-pic:hover img { filter: grayscale(0); transform: scale(1.06); }
+  .footer-col h5 {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 20px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col ul a, .footer-col a {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--dark);
+    text-decoration: none;
+    transition: color 0.2s, padding-left 0.35s var(--ease);
+    display: block;
+    margin-bottom: 10px;
+  }
+  .footer-col ul a:hover, .footer-col a:hover { color: var(--mid); padding-left: 6px; }
+  .footer-col p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+  .footer-word {
+    font-family: var(--display);
+    font-size: clamp(70px, 15vw, 240px);
+    font-weight: 400;
+    letter-spacing: -0.045em;
+    line-height: 1;
+    text-align: center;
+    color: var(--dark);
+    opacity: 0.08;
+    user-select: none;
+    white-space: nowrap;
+    transform: translateY(18%);
+    pointer-events: none;
+  }
+  .footer-bar {
+    padding: 20px 0 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-bar p { font-size: 12px; color: var(--mid); }
+  .footer-bar-links { display: flex; gap: 24px; }
+  .footer-bar-links a {
+    font-size: 12px;
+    color: var(--mid);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-bar-links a:hover { color: var(--dark); }
+
+  /* ── RESPONSIVE ──────────────────────────── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { padding: 0 24px 56px; }
+    .hero-tag { left: 24px; }
+    .section { padding: 72px 24px; }
+    .newsletter, .cta-banner { padding: 90px 24px; }
+    footer { padding: 64px 24px 0; }
+    .about-grid { grid-template-columns: 1fr; gap: 48px; }
+    .about-img-wrap { justify-self: start; max-width: 340px; }
+    .service-row { grid-template-columns: 48px 1fr; }
+    .service-desc { grid-column: 2; }
+    .footer-main { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .footer-main { grid-template-columns: 1fr; }
+    .work-card, .work-card:first-child, .work-card:last-child { width: 78vw; }
+    .service-row { grid-template-columns: 1fr; gap: 12px; }
+    .service-desc { grid-column: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .reveal, .line-mask > span { opacity: 1 !important; transform: none !important; }
+    .reveal .work-thumb { clip-path: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── PRELOADER ──────────────────────────────── -->
+<div class="loader" id="loader"><span>AS/W Studio®</span></div>
+
+<!-- ── NAV ────────────────────────────────────── -->
+<nav id="nav">
+  <a href="#" class="nav-logo">AS/W Studio®</a>
+  <ul class="nav-links">
+    <li><a href="#works">Works</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:alexandresantanapn@gmail.com" class="nav-cta">Get in touch</a>
+</nav>
+
+<!-- ── HERO ───────────────────────────────────── -->
+<section class="hero">
+  <p class="hero-tag line-mask" style="--d:.9s"><span>Since 2016, from Brazil, based in Australia</span></p>
+  <h1 class="hero-title line-mask" style="--d:.15s"><span>
+    Generating value for people and competitive advantage for businesses. Brands designed to scale across every format.
+  </span></h1>
+</section>
+
+<!-- ── WORKS ───────────────────────────────────── -->
+<section class="section" id="works">
+  <div class="section-head reveal">
+    <p class="section-label">Selected works</p>
+    <span class="section-num">/ 01</span>
+  </div>
+  <div class="works-scroll" id="worksScroll">
+    <a href="https://asworkco.myportfolio.com/axys-construction-company" target="_blank" rel="noopener" class="work-card reveal" style="--d:0s">
+      <div class="work-thumb"><img src="axys.jpg" onerror="this.onerror=null;this.src='https://cdn.myportfolio.com/5de6aae4-efe1-45f0-9a22-30f9822f4922/926bacda-e022-4a3d-bb00-f01b89348ba6_car_4x3.png?h=aa0136e08d3f6f44ff775cb840311808'" alt="Axys Construction Company"></div>
+      <div class="work-meta">
+        <span class="work-name">Axys Construction</span>
+        <span class="work-type">Brand Identity · 2023</span>
+      </div>
+    </a>
+    <a href="https://asworkco.myportfolio.com/incorpower" target="_blank" rel="noopener" class="work-card reveal" style="--d:.12s">
+      <div class="work-thumb"><img src="incorpower.jpg" onerror="this.onerror=null;this.src='https://cdn.myportfolio.com/5de6aae4-efe1-45f0-9a22-30f9822f4922/0792587c-e66e-4bdf-9cc8-c9782c859c18_car_4x3.png?h=7405715c31ff8f13031fa4792eb9160b'" alt="Incorpower"></div>
+      <div class="work-meta">
+        <span class="work-name">Incorpower</span>
+        <span class="work-type">Brand Identity · 2022</span>
+      </div>
+    </a>
+    <a href="https://asworkco.myportfolio.com" target="_blank" rel="noopener" class="work-card reveal" style="--d:.24s">
+      <div class="work-thumb"><img src="smartwash.jpg" onerror="this.onerror=null;this.closest('.work-card').style.display='none'" alt="SmartWash"></div>
+      <div class="work-meta">
+        <span class="work-name">SmartWash</span>
+        <span class="work-type">Brand Identity</span>
+      </div>
+    </a>
+    <a href="https://asworkco.myportfolio.com/bocazul" target="_blank" rel="noopener" class="work-card reveal" style="--d:.36s">
+      <div class="work-thumb"><img src="bocazul.jpg" onerror="this.onerror=null;this.src='https://cdn.myportfolio.com/5de6aae4-efe1-45f0-9a22-30f9822f4922/d0716855-ce93-4621-9823-355356f2881b_car_4x3.png?h=9de58602ea821965545c6ae2e3f6d7bd'" alt="Bocazul"></div>
+      <div class="work-meta">
+        <span class="work-name">Bocazul</span>
+        <span class="work-type">Brand Identity · 2022</span>
+      </div>
+    </a>
+    <a href="https://asworkco.myportfolio.com/gold-diamond-group" target="_blank" rel="noopener" class="work-card reveal" style="--d:.48s">
+      <div class="work-thumb"><img src="gold-diamond.jpg" onerror="this.onerror=null;this.src='https://cdn.myportfolio.com/5de6aae4-efe1-45f0-9a22-30f9822f4922/9355d8e9-87ed-4b4c-86cb-f087cd15b66b_car_4x3.jpg?h=1113b1628bdaf32282a19b075807d63b'" alt="Gold Diamond Group"></div>
+      <div class="work-meta">
+        <span class="work-name">Gold Diamond Group</span>
+        <span class="work-type">Brand Identity · 2022</span>
+      </div>
+    </a>
+    <a href="https://asworkco.myportfolio.com" target="_blank" rel="noopener" class="work-card reveal" style="--d:.6s">
+      <div class="work-thumb"><img src="https://cdn.myportfolio.com/5de6aae4-efe1-45f0-9a22-30f9822f4922/b10acc0c-3c85-44e9-9b58-c66d5dd85afc_car_4x3.png?h=51380090c84ba91b8b0f8218371fa384" alt="Full portfolio"></div>
+      <div class="work-meta">
+        <span class="work-name">View all</span>
+        <span class="work-type">+10 projects</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ── MARQUEE ─────────────────────────────────── -->
+<div class="marquee-wrap">
+  <div class="marquee-track" aria-hidden="true">
+    <span class="marquee-item">Brand Identity</span>
+    <span class="marquee-item">Digital Product</span>
+    <span class="marquee-item">UX/UI Design</span>
+    <span class="marquee-item">Technical &amp; Production Design</span>
+    <span class="marquee-item">Brand Identity</span>
+    <span class="marquee-item">Digital Product</span>
+    <span class="marquee-item">UX/UI Design</span>
+    <span class="marquee-item">Technical &amp; Production Design</span>
+    <span class="marquee-item">Brand Identity</span>
+    <span class="marquee-item">Digital Product</span>
+    <span class="marquee-item">UX/UI Design</span>
+    <span class="marquee-item">Technical &amp; Production Design</span>
+    <span class="marquee-item">Brand Identity</span>
+    <span class="marquee-item">Digital Product</span>
+    <span class="marquee-item">UX/UI Design</span>
+    <span class="marquee-item">Technical &amp; Production Design</span>
+  </div>
+</div>
+
+<!-- ── ABOUT ───────────────────────────────────── -->
+<section class="section" id="about">
+  <div class="about-grid">
+    <div class="about-text">
+      <div class="reveal">
+        <span class="section-label">About</span>
+      </div>
+      <h2 class="reveal" style="--d:.1s">Alexandre Santana &amp; Co</h2>
+      <p class="reveal" style="--d:.2s">
+        "The challenge is to deeply understand the core of each business and apply those findings to an authentic, functional brand identity. From there, the work expands across every layer of the brand: digital products and websites built end to end, UX/UI design focused on clarity and conversion, and the technical and production design that makes everything work in the real world, from artwork finalization to print and packaging.
+      </p>
+      <p class="reveal" style="--d:.3s">
+        The focus of every project is to align the company's commercial strategy with its brand strategy to reach its goals. Creating experiences of value for people and competitive advantages in the market."
+      </p>
+      <div class="reveal" style="--d:.4s">
+        <a href="mailto:alexandresantanapn@gmail.com" class="about-link">Get in touch <span>→</span></a>
+      </div>
+    </div>
+    <div class="about-img-wrap reveal" style="--d:.15s">
+      <img src="alexandre.jpg" data-try="alexandre.jpeg,alexandre.png,Alexandre.jpg,alexandre.JPG,IMG_alexandre.jpg" onerror="var t=(this.dataset.try||'').split(',').filter(Boolean);if(t.length){this.dataset.try=t.slice(1).join(',');this.src=t[0];}else{this.onerror=null;this.src='https://cdn.myportfolio.com/5de6aae4-efe1-45f0-9a22-30f9822f4922/0198e1d1-822d-4640-ab9a-b88e17326ac8_rwc_1085x2130x5233x2417x4096.jpeg?h=91d70a0a2137f0d660b3c498a9f707b3';}" alt="Alexandre Santana, AS/W Studio" data-parallax>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICES ────────────────────────────────── -->
+<section class="section" id="services">
+  <div class="section-head reveal">
+    <p class="section-label">Services</p>
+    <span class="section-num">/ 03</span>
+  </div>
+  <div class="service-row reveal" style="--d:0s">
+    <span class="service-num">01</span>
+    <h3 class="service-name">Brand Identity</h3>
+    <p class="service-desc">
+      Strategy-driven visual identities: logo systems, typography, color and guidelines that translate the business positioning into a coherent visual territory, built to differentiate the brand and scale across every touchpoint.
+    </p>
+  </div>
+  <div class="service-row reveal" style="--d:.08s">
+    <span class="service-num">02</span>
+    <h3 class="service-name">Digital Product</h3>
+    <p class="service-desc">
+      Websites, e-commerce and digital products designed end to end. Structure, content and interface working as one system, planned, prototyped and delivered ready for launch.
+    </p>
+  </div>
+  <div class="service-row reveal" style="--d:.16s">
+    <span class="service-num">03</span>
+    <h3 class="service-name">UX/UI Design</h3>
+    <p class="service-desc">
+      Interfaces focused on clarity, usability and conversion. From user flows and wireframes to polished, developer-ready UI. Design decisions grounded in how people actually use the product.
+    </p>
+  </div>
+  <div class="service-row reveal" style="--d:.24s">
+    <span class="service-num">04</span>
+    <h3 class="service-name">Technical &amp; Production Design</h3>
+    <p class="service-desc">
+      The technical layer that makes brands work in the real world: artwork finalization, print and packaging specifications, signage and production-ready files, executed with precision so nothing gets lost between design and delivery.
+    </p>
+  </div>
+</section>
+
+<!-- ── NEWSLETTER ──────────────────────────────── -->
+<div class="newsletter">
+  <h2 class="reveal">Stay connected with AS/W Studio®. New work, refined ideas and creative direction, delivered when it matters.</h2>
+  <p class="reveal" style="--d:.1s">Maximum two updates monthly, only meaningful releases.</p>
+  <form class="nl-form reveal" style="--d:.2s" onsubmit="return false;">
+    <input type="email" placeholder="your@email.com" aria-label="Email">
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<!-- ── CTA BANNER ──────────────────────────────── -->
+<div class="cta-banner" id="contact">
+  <a href="mailto:alexandresantanapn@gmail.com" class="reveal">Let's talk</a>
+  <p class="reveal" style="--d:.15s">alexandresantanapn@gmail.com</p>
+</div>
+
+<!-- ── FOOTER ──────────────────────────────────── -->
+<footer>
+  <div class="footer-main">
+    <div class="reveal">
+      <a href="#" class="footer-logo">AS/W Studio®</a>
+      <div class="footer-pics">
+        <div class="footer-pic"><img src="https://cdn.myportfolio.com/5de6aae4-efe1-45f0-9a22-30f9822f4922/926bacda-e022-4a3d-bb00-f01b89348ba6_car_4x3.png?h=aa0136e08d3f6f44ff775cb840311808" alt="Axys"></div>
+        <div class="footer-pic"><img src="https://cdn.myportfolio.com/5de6aae4-efe1-45f0-9a22-30f9822f4922/d0716855-ce93-4621-9823-355356f2881b_car_4x3.png?h=9de58602ea821965545c6ae2e3f6d7bd" alt="Bocazul"></div>
+        <div class="footer-pic"><img src="https://cdn.myportfolio.com/5de6aae4-efe1-45f0-9a22-30f9822f4922/9355d8e9-87ed-4b4c-86cb-f087cd15b66b_car_4x3.jpg?h=1113b1628bdaf32282a19b075807d63b" alt="Gold Diamond"></div>
+      </div>
+    </div>
+    <div class="footer-col reveal" style="--d:.1s">
+      <h5>Navigation</h5>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#works">Works</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col reveal" style="--d:.2s">
+      <h5>Contact</h5>
+      <a href="mailto:alexandresantanapn@gmail.com">alexandresantanapn@gmail.com</a>
+      <a href="https://www.instagram.com/aswork.co/" target="_blank" rel="noopener">@aswork.co</a>
+      <a href="https://asworkco.myportfolio.com" target="_blank" rel="noopener">Full portfolio</a>
+    </div>
+    <div class="footer-col reveal" style="--d:.3s">
+      <h5>Location</h5>
+      <p>From Brazil<br>Based in Australia</p>
+    </div>
+  </div>
+  <div class="footer-word" aria-hidden="true">AS/W Studio®</div>
+  <div class="footer-bar">
+    <p>AS/W Studio® · All rights reserved.</p>
+    <div class="footer-bar-links">
+      <a href="#">Privacy Policy</a>
+      <a href="https://www.instagram.com/aswork.co/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://asworkco.myportfolio.com" target="_blank" rel="noopener">Portfolio</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── Preloader + hero entrance ──
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('loader').classList.add('done');
+      document.body.classList.add('loaded');
+    }, 500);
+  });
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('done');
+    document.body.classList.add('loaded');
+  }, 2600);
+
+  // ── Scroll reveals ──
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ── Nav: hide on scroll down, show on up ──
+  const nav = document.getElementById('nav');
+  let lastY = 0;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    nav.classList.toggle('scrolled', y > 10);
+    nav.classList.toggle('hidden', y > 500 && y > lastY);
+    lastY = y;
+  }, { passive: true });
+
+  // ── Drag-to-scroll on works ──
+  const scroll = document.getElementById('worksScroll');
+  let isDown = false, startX, scrollLeft;
+  scroll.addEventListener('mousedown', e => {
+    isDown = true;
+    startX = e.pageX - scroll.offsetLeft;
+    scrollLeft = scroll.scrollLeft;
+  });
+  ['mouseleave','mouseup'].forEach(ev => scroll.addEventListener(ev, () => isDown = false));
+  scroll.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    scroll.scrollLeft = scrollLeft - ((e.pageX - scroll.offsetLeft) - startX) * 1.4;
+  });
+
+  // ── Parallax on about image ──
+  const para = document.querySelector('[data-parallax]');
+  if (para && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    window.addEventListener('scroll', () => {
+      const r = para.parentElement.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > innerHeight) return;
+      const p = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;
+      para.style.transform = `translateY(${p * -34}px)`;
+    }, { passive: true });
+  }
+</script>
+</body>
+</html>
