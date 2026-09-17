@@ -33,7 +33,6 @@
   ::selection { background: var(--dark); color: var(--bg); }
   img { -webkit-user-drag: none; }
 
-  /* ── GRAIN OVERLAY ───────────────────────── */
   body::after {
     content: '';
     position: fixed;
@@ -41,10 +40,9 @@
     z-index: 999;
     pointer-events: none;
     opacity: 0.025;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOc[...]
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='table' tableValues='0 0.4'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  /* ── PRELOADER ───────────────────────────── */
   .loader {
     position: fixed;
     inset: 0;
@@ -65,7 +63,6 @@
   }
   @keyframes pulse { 0%,100% { opacity: 0.25; } 50% { opacity: 1; } }
 
-  /* ── REVEAL SYSTEM ───────────────────────── */
   .reveal {
     opacity: 0;
     transform: translateY(44px);
@@ -82,7 +79,6 @@
   }
   .loaded .line-mask > span { transform: translateY(0); }
 
-  /* ── NAV ─────────────────────────────────── */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -154,7 +150,6 @@
   }
   .nav-cta:hover::before { transform: scale(1.06); }
 
-  /* ── HERO ─────────────────────────────────── */
   .hero {
     min-height: 100svh;
     padding: 0 48px 72px;
@@ -185,7 +180,6 @@
     text-wrap: balance;
   }
 
-  /* ── SECTION BASE ───────────────────────────── */
   .section {
     padding: 110px 48px;
     border-bottom: 1px solid var(--border);
@@ -209,7 +203,6 @@
     color: var(--mid);
   }
 
-  /* ── WORKS ────────────────────────────────── */
   .works-scroll {
     display: flex;
     gap: 20px;
@@ -269,7 +262,7 @@
     text-transform: uppercase;
     color: var(--mid);
   }
-  /* ── MARQUEE ─────────────────────────────── */
+
   .marquee-wrap {
     overflow: hidden;
     border-bottom: 1px solid var(--border);
@@ -294,7 +287,6 @@
   .marquee-item:hover { color: var(--dark); }
   @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-  /* ── ABOUT ───────────────────────────────── */
   .about-grid {
     display: grid;
     grid-template-columns: 1.4fr 1fr;
@@ -348,7 +340,6 @@
     will-change: transform;
   }
 
-  /* ── SERVICES ────────────────────────────── */
   .service-row {
     display: grid;
     grid-template-columns: 80px 1fr 1.2fr;
@@ -380,7 +371,6 @@
     max-width: 520px;
   }
 
-  /* ── NEWSLETTER ──────────────────────────── */
   .newsletter {
     text-align: center;
     padding: 130px 48px;
@@ -438,7 +428,6 @@
   }
   .nl-form button:hover { opacity: 0.78; }
 
-  /* ── CTA BANNER ──────────────────────────── */
   .cta-banner {
     padding: 140px 48px;
     text-align: center;
@@ -464,98 +453,6 @@
     color: var(--mid);
   }
 
-  .asw-contact{
-    --asw-ink:#0d0d0d;
-    --asw-paper:#f4f2ef;
-    --asw-line:rgba(13,13,13,.16);
-    --asw-muted:rgba(13,13,13,.52);
-    background:var(--asw-paper);
-    color:var(--asw-ink);
-    padding:clamp(64px,10vw,140px) clamp(20px,5vw,72px);
-    font-family:"Neue Haas Grotesk Display","Inter","Helvetica Neue",Helvetica,Arial,sans-serif;
-    -webkit-font-smoothing:antialiased;
-    text-rendering:optimizeLegibility;
-    font-kerning:normal;
-  }
-  .asw-contact__inner{max-width:1080px;margin:0 auto}
-  .asw-eyebrow{
-    display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--asw-muted);margin-bottom:28px;
-  }
-  .asw-title{
-    font-size:clamp(32px,5.2vw,60px);line-height:1.02;letter-spacing:-.03em;
-    font-weight:500;margin:0 0 18px;
-  }
-  .asw-lede{max-width:46ch;margin:0 0 clamp(40px,6vw,72px);color:var(--asw-muted);font-size:16px;line-height:1.55}
-
-  .asw-form{border-top:1px solid var(--asw-line)}
-  .asw-hp{position:absolute;left:-9999px;opacity:0;height:0;width:0}
-
-  .asw-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
-  .asw-field{
-    display:flex;flex-direction:column;gap:12px;
-    padding:26px 0 28px;border-bottom:1px solid var(--asw-line);
-    margin:0;border-left:0;border-right:0;border-top:0;min-width:0;
-  }
-  .asw-grid .asw-field:nth-child(odd){padding-right:clamp(16px,4vw,48px)}
-  .asw-grid .asw-field:nth-child(even){padding-left:clamp(16px,4vw,48px);border-left:1px solid var(--asw-line)}
-  .asw-field--full{grid-column:1/-1}
-
-  .asw-field > label,.asw-field > .asw-label{
-    display:flex;align-items:baseline;justify-content:space-between;gap:12px;width:100%;
-    font-size:11px;line-height:1.2;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--asw-muted);padding:0;margin:0;
-  }
-  .asw-field > label b,.asw-field > .asw-label b{color:var(--asw-ink);font-weight:inherit}
-  .asw-counter{font-style:normal;letter-spacing:.08em;font-variant-numeric:tabular-nums;color:var(--asw-muted);flex:none}
-  .asw-counter.is-near{color:var(--asw-ink)}
-  .asw-field small{font-size:12.5px;line-height:1.45;color:var(--asw-muted);letter-spacing:0;text-transform:none}
-
-  .asw-field input[type=text],
-  .asw-field input[type=email],
-  .asw-field select,
-  .asw-field textarea{
-    width:100%;background:transparent;border:0;border-radius:0;padding:2px 0;
-    font:inherit;font-size:clamp(17px,2vw,20px);line-height:1.3;letter-spacing:-.015em;
-    color:var(--asw-ink);appearance:none;outline:0;
-  }
-  .asw-field textarea{resize:vertical;line-height:1.5;font-size:clamp(16px,1.6vw,17px);letter-spacing:-.005em}
-  .asw-field select{cursor:pointer;background-image:linear-gradient(45deg,transparent 50%,var(--asw-ink) 50%),linear-gradient(135deg,var(--asw-ink) 50%,transparent 50%);background-position:calc(100% - 9px) calc(50% + 1px),calc(100% - 4px) calc(50% + 1px);background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:24px}
-  .asw-field ::placeholder{color:rgba(13,13,13,.28);letter-spacing:-.01em}
-  .asw-field:focus-within{border-bottom-color:var(--asw-ink)}
-  .asw-field.is-invalid{border-bottom-color:#b4321f}
-  .asw-field.is-invalid > label,.asw-field.is-invalid > .asw-label{color:#b4321f}
-
-  .asw-field--chips{padding:24px 0 24px;gap:14px}
-  .asw-chips{display:flex;flex-wrap:wrap;gap:8px;margin:0}
-  .asw-chip{display:inline-flex;cursor:pointer}
-  .asw-chip input{position:absolute;opacity:0;pointer-events:none}
-  .asw-chip span{
-    display:inline-block;padding:9px 16px;border:1px solid var(--asw-line);border-radius:999px;
-    font-size:14px;line-height:1.2;letter-spacing:-.01em;white-space:nowrap;
-    transition:background .18s ease,color .18s ease,border-color .18s ease;
-  }
-  .asw-chip:hover span{border-color:var(--asw-ink)}
-  .asw-chip input:checked+span{background:var(--asw-ink);color:var(--asw-paper);border-color:var(--asw-ink)}
-  .asw-chip input:focus-visible+span{outline:2px solid var(--asw-ink);outline-offset:2px}
-
-  .asw-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;padding-top:32px}
-  .asw-submit{
-    display:inline-flex;align-items:center;gap:12px;cursor:pointer;
-    background:var(--asw-ink);color:var(--asw-paper);border:1px solid var(--asw-ink);
-    border-radius:999px;padding:16px 30px;font:inherit;font-size:15px;letter-spacing:-.01em;
-    transition:background .2s ease,color .2s ease;
-  }
-  .asw-submit:hover{background:transparent;color:var(--asw-ink)}
-  .asw-submit[disabled]{opacity:.45;pointer-events:none}
-  .asw-submit svg{transition:transform .2s ease}
-  .asw-submit:hover svg{transform:translateX(3px)}
-  .asw-note{margin:0;font-size:13px;line-height:1.45;color:var(--asw-muted)}
-  .asw-note a{color:inherit}
-  .asw-note.is-error{color:#b4321f}
-  .asw-note.is-success{color:var(--asw-ink)}
-
-  /* ── FOOTER ──────────────────────────────── */
   footer { padding: 80px 48px 0; }
   .footer-main {
     display: grid;
@@ -645,7 +542,152 @@
   }
   .footer-bar-links a:hover { color: var(--dark); }
 
-  /* ── RESPONSIVE ──────────────────────────── */
+  .contact-modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(13, 13, 13, 0.28);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+    z-index: 300;
+  }
+  .contact-modal.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .contact-modal__panel {
+    width: min(920px, calc(100vw - 32px));
+    max-height: min(88vh, 900px);
+    overflow: auto;
+    background: #f4f2ef;
+    color: #0d0d0d;
+    border: 1px solid rgba(13,13,13,0.12);
+    box-shadow: 0 30px 80px rgba(13,13,13,0.18);
+  }
+  .contact-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 22px 28px 18px;
+    border-bottom: 1px solid rgba(13,13,13,0.12);
+  }
+  .contact-modal__title {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(13,13,13,0.52);
+  }
+  .contact-modal__close {
+    border: 1px solid rgba(13,13,13,0.18);
+    background: transparent;
+    color: var(--dark);
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 22px;
+    line-height: 1;
+  }
+  .contact-modal__body {
+    padding: 28px;
+  }
+  .contact-modal__head {
+    margin-bottom: 26px;
+  }
+  .contact-modal__head h2 {
+    font-family: var(--display);
+    font-size: clamp(30px, 4vw, 54px);
+    font-weight: 500;
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    margin: 0 0 10px;
+  }
+  .contact-modal__head p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: rgba(13,13,13,0.58);
+    max-width: 52ch;
+  }
+
+  .asw-form { border-top: 1px solid rgba(13,13,13,0.12); }
+  .asw-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .asw-field {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 26px 0 28px;
+    border-bottom: 1px solid rgba(13,13,13,0.12);
+    margin: 0;
+    min-width: 0;
+  }
+  .asw-grid .asw-field:nth-child(odd){padding-right: clamp(16px,4vw,48px)}
+  .asw-grid .asw-field:nth-child(even){padding-left: clamp(16px,4vw,48px);border-left:1px solid rgba(13,13,13,0.12)}
+  .asw-field--full{grid-column:1/-1}
+
+  .asw-field > label, .asw-field > .asw-label {
+    display:flex; align-items:baseline; justify-content:space-between; gap:12px; width:100%;
+    font-size:11px; line-height:1.2; letter-spacing:.14em; text-transform:uppercase;
+    color:rgba(13,13,13,0.52); padding:0; margin:0;
+  }
+  .asw-field > label b, .asw-field > .asw-label b{color:var(--dark);font-weight:inherit}
+  .asw-counter{font-style:normal;letter-spacing:.08em;font-variant-numeric:tabular-nums;color:rgba(13,13,13,0.52);flex:none}
+  .asw-counter.is-near{color:var(--dark)}
+  .asw-field small{font-size:12.5px;line-height:1.45;color:rgba(13,13,13,0.52);letter-spacing:0;text-transform:none}
+
+  .asw-field input[type=text],
+  .asw-field input[type=email],
+  .asw-field select,
+  .asw-field textarea{
+    width:100%;background:transparent;border:0;border-radius:0;padding:2px 0;
+    font:inherit;font-size:clamp(17px,2vw,20px);line-height:1.3;letter-spacing:-.015em;
+    color:var(--dark);appearance:none;outline:0;
+  }
+  .asw-field textarea{resize:vertical;line-height:1.5;font-size:clamp(16px,1.6vw,17px);letter-spacing:-.005em}
+  .asw-field select{cursor:pointer;background-image:linear-gradient(45deg,transparent 50%,var(--dark) 50%),linear-gradient(135deg,var(--dark) 50%,transparent 50%);background-position:calc(100% - 9px) calc(50% + 1px),calc(100% - 4px) calc(50% + 1px);background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:24px}
+  .asw-field ::placeholder{color:rgba(13,13,13,.28);letter-spacing:-.01em}
+  .asw-field:focus-within{border-bottom-color:var(--dark)}
+  .asw-field.is-invalid{border-bottom-color:#b4321f}
+  .asw-field.is-invalid > label,.asw-field.is-invalid > .asw-label{color:#b4321f}
+
+  .asw-field--chips{padding:24px 0 24px;gap:14px}
+  .asw-chips{display:flex;flex-wrap:wrap;gap:8px;margin:0}
+  .asw-chip{display:inline-flex;cursor:pointer;position:relative}
+  .asw-chip input{position:absolute;opacity:0;pointer-events:none}
+  .asw-chip span{
+    display:inline-block;padding:9px 16px;border:1px solid rgba(13,13,13,.14);border-radius:999px;
+    font-size:14px;line-height:1.2;letter-spacing:-.01em;white-space:nowrap;
+    transition:background .18s ease,color .18s ease,border-color .18s ease;
+  }
+  .asw-chip:hover span{border-color:var(--dark)}
+  .asw-chip input:checked+span{background:var(--dark);color:#f4f2ef;border-color:var(--dark)}
+  .asw-chip input:focus-visible+span{outline:2px solid var(--dark);outline-offset:2px}
+
+  .asw-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;padding-top:32px}
+  .asw-submit{
+    display:inline-flex;align-items:center;gap:12px;cursor:pointer;
+    background:var(--dark);color:#f4f2ef;border:1px solid var(--dark);
+    border-radius:999px;padding:16px 30px;font:inherit;font-size:15px;letter-spacing:-.01em;
+    transition:background .2s ease,color .2s ease;
+  }
+  .asw-submit:hover{background:transparent;color:var(--dark)}
+  .asw-submit[disabled]{opacity:.45;pointer-events:none}
+  .asw-submit svg{transition:transform .2s ease}
+  .asw-submit:hover svg{transform:translateX(3px)}
+  .asw-note{margin:0;font-size:13px;line-height:1.45;color:rgba(13,13,13,0.52)}
+  .asw-note a{color:inherit}
+  .asw-note.is-error{color:#b4321f}
+  .asw-note.is-success{color:var(--dark)}
+
+  .asw-hp{position:absolute;left:-9999px;opacity:0;height:0;width:0}
+
   @media (max-width: 900px) {
     nav { padding: 16px 24px; }
     .nav-links { display: none; }
@@ -659,6 +701,8 @@
     .service-row { grid-template-columns: 48px 1fr; }
     .service-desc { grid-column: 2; }
     .footer-main { grid-template-columns: 1fr 1fr; }
+    .asw-grid { grid-template-columns: 1fr; }
+    .asw-grid .asw-field:nth-child(odd), .asw-grid .asw-field:nth-child(even) { padding-right:0; padding-left:0; border-left:0; }
   }
   @media (max-width: 600px) {
     .footer-main { grid-template-columns: 1fr; }
@@ -675,22 +719,19 @@
 </head>
 <body>
 
-<!-- ── PRELOADER ──────────────────────────────── -->
 <div class="loader" id="loader"><span>AS/W Studio®</span></div>
 
-<!-- ── NAV ────────────────────────────────────── -->
 <nav id="nav">
   <a href="#" class="nav-logo">AS/W Studio®</a>
   <ul class="nav-links">
     <li><a href="#works">Works</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#services">Services</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contact" data-open-contact>Contact</a></li>
   </ul>
-  <a href="mailto:alexandresantanapn@gmail.com" class="nav-cta">Get in touch</a>
+  <a href="#contact" class="nav-cta" data-open-contact>Get in touch</a>
 </nav>
 
-<!-- ── HERO ───────────────────────────────────── -->
 <section class="hero">
   <p class="hero-tag line-mask" style="--d:.9s"><span>Since 2016, from Brazil, based in Australia</span></p>
   <h1 class="hero-title line-mask" style="--d:.15s"><span>
@@ -698,7 +739,6 @@
   </span></h1>
 </section>
 
-<!-- ── WORKS ───────────────────────────────────── -->
 <section class="section" id="works">
   <div class="section-head reveal">
     <p class="section-label">Selected works</p>
@@ -713,7 +753,7 @@
       </div>
     </a>
     <a href="https://asworkco.myportfolio.com/incorpower" target="_blank" rel="noopener" class="work-card reveal" style="--d:.12s">
-      <div class="work-thumb"><img src="incorpower.jpg" onerror="this.onerror=null;this.src='https://cdn.myportfolio.com/5de6aae4-efe1-45f0-9a22-30f9822f4922/0792587c-e66e-4bdf-9cc8-c9782c859c18_car_4x3.png?h=ed7f4ef24f123a3010a4a83a11ee0dcd'" alt="Incorpower"></div>
+      <div class="work-thumb"><img src="incorpower.jpg" onerror="this.onerror=null;this.src='https://cdn.myportfolio.com/5de6aae4-efe1-45f0-9a22-30f9822f4922/0792587c-e66e-4bdf-9cc8-c9782c859c18_car_4x3.png?h=7405715c31ff8f13031fa4792eb9160b'" alt="Incorpower"></div>
       <div class="work-meta">
         <span class="work-name">Incorpower</span>
         <span class="work-type">Brand Identity · 2022</span>
@@ -750,7 +790,6 @@
   </div>
 </section>
 
-<!-- ── MARQUEE ─────────────────────────────────── -->
 <div class="marquee-wrap">
   <div class="marquee-track" aria-hidden="true">
     <span class="marquee-item">Brand Identity</span>
@@ -772,7 +811,6 @@
   </div>
 </div>
 
-<!-- ── ABOUT ───────────────────────────────────── -->
 <section class="section" id="about">
   <div class="about-grid">
     <div class="about-text">
@@ -781,13 +819,13 @@
       </div>
       <h2 class="reveal" style="--d:.1s">Alexandre Santana &amp; Co</h2>
       <p class="reveal" style="--d:.2s">
-        "The challenge is to deeply understand the core of each business and apply those findings to an authentic, functional brand identity. From there, the work expands across every layer of the commercial experience, from positioning to communication and digital touchpoints."
+        "The challenge is to deeply understand the core of each business and apply those findings to an authentic, functional brand identity. From there, the work expands across every layer of the brand: digital products and websites built end to end, UX/UI design focused on clarity and conversion, and the technical and production design that makes everything work in the real world, from artwork finalization to print and packaging."
       </p>
       <p class="reveal" style="--d:.3s">
         The focus of every project is to align the company's commercial strategy with its brand strategy to reach its goals. Creating experiences of value for people and competitive advantages in the market.
       </p>
       <div class="reveal" style="--d:.4s">
-        <a href="mailto:alexandresantanapn@gmail.com" class="about-link">Get in touch <span>→</span></a>
+        <a href="#contact" class="about-link" data-open-contact>Get in touch <span>→</span></a>
       </div>
     </div>
     <div class="about-img-wrap reveal" style="--d:.15s">
@@ -796,7 +834,6 @@
   </div>
 </section>
 
-<!-- ── SERVICES ────────────────────────────────── -->
 <section class="section" id="services">
   <div class="section-head reveal">
     <p class="section-label">Services</p>
@@ -806,7 +843,7 @@
     <span class="service-num">01</span>
     <h3 class="service-name">Brand Identity</h3>
     <p class="service-desc">
-      Strategy-driven visual identities: logo systems, typography, color and guidelines that translate the business positioning into a coherent visual territory, built to differentiate the brand and scale with clarity.
+      Strategy-driven visual identities: logo systems, typography, color and guidelines that translate the business positioning into a coherent visual territory, built to differentiate the brand and scale across every touchpoint.
     </p>
   </div>
   <div class="service-row reveal" style="--d:.08s">
@@ -832,7 +869,6 @@
   </div>
 </section>
 
-<!-- ── NEWSLETTER ──────────────────────────────── -->
 <div class="newsletter">
   <h2 class="reveal">Stay connected with AS/W Studio®. New work, refined ideas and creative direction, delivered when it matters.</h2>
   <p class="reveal" style="--d:.1s">Maximum two updates monthly, only meaningful releases.</p>
@@ -842,102 +878,11 @@
   </form>
 </div>
 
-<!-- ── CONTACT FORM ─────────────────────────────── -->
-<section id="contact" class="asw-contact">
-  <div class="asw-contact__inner">
-    <header class="asw-contact__head">
-      <span class="asw-eyebrow">Contact / 04</span>
-      <h2 class="asw-title">Tell me about the project.</h2>
-      <p class="asw-lede">
-        Seven questions, under two minutes. I reply within two business days
-        with next steps or a short call invite.
-      </p>
-    </header>
+<div class="cta-banner" id="contact">
+  <a href="#contact" class="reveal" data-open-contact>Let's talk</a>
+  <p class="reveal" style="--d:.15s">alexandresantanapn@gmail.com</p>
+</div>
 
-    <form class="asw-form" id="aswContactForm" novalidate>
-      <input type="hidden" name="_endpoint" value="">
-      <input type="hidden" name="_subject" value="New project enquiry / asworkdesign.com">
-      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="asw-hp" aria-hidden="true">
-
-      <div class="asw-grid">
-        <div class="asw-field">
-          <label for="asw-name">Name <b>*</b></label>
-          <input id="asw-name" name="name" type="text" required maxlength="60"
-                 autocomplete="name" spellcheck="false" placeholder="Your full name">
-        </div>
-
-        <div class="asw-field">
-          <label for="asw-email">Email <b>*</b></label>
-          <input id="asw-email" name="email" type="email" required maxlength="120"
-                 autocomplete="email" spellcheck="false" autocapitalize="off"
-                 inputmode="email" placeholder="you@company.com">
-        </div>
-
-        <div class="asw-field">
-          <label for="asw-company">Company / brand</label>
-          <input id="asw-company" name="company" type="text" maxlength="80"
-                 autocomplete="organization" placeholder="Name or website">
-        </div>
-
-        <div class="asw-field">
-          <label for="asw-timeline">Timeline <b>*</b></label>
-          <select id="asw-timeline" name="timeline" required>
-            <option value="" disabled selected>Select</option>
-            <option>Ready to start now</option>
-            <option>Within 1 to 3 months</option>
-            <option>In 3+ months</option>
-            <option>Just exploring</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="asw-field asw-field--full asw-field--chips" role="group" aria-labelledby="asw-scope-label">
-        <span class="asw-label" id="asw-scope-label">What do you need? <b>*</b></span>
-        <div class="asw-chips">
-          <label class="asw-chip"><input type="checkbox" name="scope" value="Brand Identity"><span>Brand Identity</span></label>
-          <label class="asw-chip"><input type="checkbox" name="scope" value="Digital Product"><span>Digital Product</span></label>
-          <label class="asw-chip"><input type="checkbox" name="scope" value="UX/UI Design"><span>UX/UI Design</span></label>
-          <label class="asw-chip"><input type="checkbox" name="scope" value="Technical and Production"><span>Technical and Production</span></label>
-          <label class="asw-chip"><input type="checkbox" name="scope" value="Not sure yet"><span>Not sure yet</span></label>
-        </div>
-      </div>
-
-      <div class="asw-field asw-field--full">
-        <label for="asw-budget">Investment range <b>*</b></label>
-        <select id="asw-budget" name="budget" required>
-          <option value="" disabled selected>Select</option>
-          <option>Under $5,000 AUD</option>
-          <option>$5,000 to $15,000 AUD</option>
-          <option>$15,000 to $40,000 AUD</option>
-          <option>$40,000+ AUD</option>
-          <option>Not defined yet</option>
-        </select>
-        <small>Helps me scope honestly. No range is judged. It just decides what is possible.</small>
-      </div>
-
-      <div class="asw-field asw-field--full">
-        <label for="asw-message">
-          <span>The project, in a few lines <b>*</b></span>
-          <i class="asw-counter" id="aswCount" aria-hidden="true">0 / 800</i>
-        </label>
-        <textarea id="asw-message" name="message" rows="4" required maxlength="800"
-          placeholder="What you do, what needs to change, and what success looks like."></textarea>
-      </div>
-
-      <div class="asw-actions">
-        <button type="submit" class="asw-submit">
-          <span>Send enquiry</span>
-          <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
-        </button>
-        <p class="asw-note" id="aswStatus" role="status" aria-live="polite">
-          Or email directly: <a href="mailto:alexandresantanapn@gmail.com">alexandresantanapn@gmail.com</a>
-        </p>
-      </div>
-    </form>
-  </div>
-</section>
-
-<!-- ── FOOTER ──────────────────────────────────── -->
 <footer>
   <div class="footer-main">
     <div class="reveal">
@@ -955,7 +900,7 @@
         <li><a href="#works">Works</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#services">Services</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#contact" data-open-contact>Contact</a></li>
       </ul>
     </div>
     <div class="footer-col reveal" style="--d:.2s">
@@ -980,8 +925,97 @@
   </div>
 </footer>
 
+<div class="contact-modal" id="contactModal" aria-hidden="true">
+  <div class="contact-modal__panel" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
+    <div class="contact-modal__header">
+      <div class="contact-modal__title" id="contactTitle">Contact</div>
+      <button class="contact-modal__close" type="button" aria-label="Close contact form">×</button>
+    </div>
+    <div class="contact-modal__body">
+      <header class="contact-modal__head">
+        <h2>Tell me about the project.</h2>
+        <p>Seven questions, under two minutes. I reply within two business days with next steps or a short call invite.</p>
+      </header>
+      <form class="asw-form" id="aswContactForm" novalidate>
+        <input type="hidden" name="_endpoint" value="">
+        <input type="hidden" name="_subject" value="New project enquiry / asworkdesign.com">
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="asw-hp" aria-hidden="true">
+
+        <div class="asw-grid">
+          <div class="asw-field">
+            <label for="asw-name">Name <b>*</b></label>
+            <input id="asw-name" name="name" type="text" required maxlength="60" autocomplete="name" spellcheck="false" placeholder="Your full name">
+          </div>
+
+          <div class="asw-field">
+            <label for="asw-email">Email <b>*</b></label>
+            <input id="asw-email" name="email" type="email" required maxlength="120" autocomplete="email" spellcheck="false" autocapitalize="off" inputmode="email" placeholder="you@company.com">
+          </div>
+
+          <div class="asw-field">
+            <label for="asw-company">Company / brand</label>
+            <input id="asw-company" name="company" type="text" maxlength="80" autocomplete="organization" placeholder="Name or website">
+          </div>
+
+          <div class="asw-field">
+            <label for="asw-timeline">Timeline <b>*</b></label>
+            <select id="asw-timeline" name="timeline" required>
+              <option value="" disabled selected>Select</option>
+              <option>Ready to start now</option>
+              <option>Within 1 to 3 months</option>
+              <option>In 3+ months</option>
+              <option>Just exploring</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="asw-field asw-field--full asw-field--chips" role="group" aria-labelledby="asw-scope-label">
+          <span class="asw-label" id="asw-scope-label">What do you need? <b>*</b></span>
+          <div class="asw-chips">
+            <label class="asw-chip"><input type="checkbox" name="scope" value="Brand Identity"><span>Brand Identity</span></label>
+            <label class="asw-chip"><input type="checkbox" name="scope" value="Digital Product"><span>Digital Product</span></label>
+            <label class="asw-chip"><input type="checkbox" name="scope" value="UX/UI Design"><span>UX/UI Design</span></label>
+            <label class="asw-chip"><input type="checkbox" name="scope" value="Technical and Production"><span>Technical and Production</span></label>
+            <label class="asw-chip"><input type="checkbox" name="scope" value="Not sure yet"><span>Not sure yet</span></label>
+          </div>
+        </div>
+
+        <div class="asw-field asw-field--full">
+          <label for="asw-budget">Investment range <b>*</b></label>
+          <select id="asw-budget" name="budget" required>
+            <option value="" disabled selected>Select</option>
+            <option>Under $5,000 AUD</option>
+            <option>$5,000 to $15,000 AUD</option>
+            <option>$15,000 to $40,000 AUD</option>
+            <option>$40,000+ AUD</option>
+            <option>Not defined yet</option>
+          </select>
+          <small>Helps me scope honestly. No range is judged. It just decides what is possible.</small>
+        </div>
+
+        <div class="asw-field asw-field--full">
+          <label for="asw-message">
+            <span>The project, in a few lines <b>*</b></span>
+            <i class="asw-counter" id="aswCount" aria-hidden="true">0 / 800</i>
+          </label>
+          <textarea id="asw-message" name="message" rows="4" required maxlength="800" placeholder="What you do, what needs to change, and what success looks like."></textarea>
+        </div>
+
+        <div class="asw-actions">
+          <button type="submit" class="asw-submit">
+            <span>Send enquiry</span>
+            <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+          </button>
+          <p class="asw-note" id="aswStatus" role="status" aria-live="polite">
+            Or email directly: <a href="mailto:alexandresantanapn@gmail.com">alexandresantanapn@gmail.com</a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script>
-  // ── Preloader + hero entrance ──
   window.addEventListener('load', () => {
     setTimeout(() => {
       document.getElementById('loader').classList.add('done');
@@ -993,7 +1027,6 @@
     document.body.classList.add('loaded');
   }, 2600);
 
-  // ── Scroll reveals ──
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
@@ -1001,7 +1034,6 @@
   }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  // ── Nav: hide on scroll down, show on up ──
   const nav = document.getElementById('nav');
   let lastY = 0;
   window.addEventListener('scroll', () => {
@@ -1011,7 +1043,6 @@
     lastY = y;
   }, { passive: true });
 
-  // ── Drag-to-scroll on works ──
   const scroll = document.getElementById('worksScroll');
   let isDown = false, startX, scrollLeft;
   scroll.addEventListener('mousedown', e => {
@@ -1026,7 +1057,6 @@
     scroll.scrollLeft = scrollLeft - ((e.pageX - scroll.offsetLeft) - startX) * 1.4;
   });
 
-  // ── Parallax on about image ──
   const para = document.querySelector('[data-parallax]');
   if (para && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     window.addEventListener('scroll', () => {
@@ -1035,6 +1065,46 @@
       const p = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;
       para.style.transform = `translateY(${p * -34}px)`;
     }, { passive: true });
+  }
+
+  const modal = document.getElementById('contactModal');
+  const modalClose = document.querySelector('.contact-modal__close');
+  const openButtons = document.querySelectorAll('[data-open-contact]');
+
+  function openModal() {
+    if (!modal) return;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    const firstInput = modal.querySelector('input, select, textarea');
+    if (firstInput) setTimeout(() => firstInput.focus(), 80);
+  }
+
+  function closeModal() {
+    if (!modal) return;
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  openButtons.forEach(btn => {
+    btn.addEventListener('click', function (event) {
+      event.preventDefault();
+      openModal();
+    });
+  });
+
+  if (modalClose) {
+    modalClose.addEventListener('click', closeModal);
+  }
+
+  if (modal) {
+    modal.addEventListener('click', function (event) {
+      if (event.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+    });
   }
 
   (function () {
@@ -1122,10 +1192,10 @@
           tick();
           status.textContent = 'Received. You will hear back within two business days.';
           status.className = 'asw-note is-success';
+          setTimeout(closeModal, 800);
         })
         .catch(function () {
-          status.innerHTML = 'Something went wrong. Email me at <a href="mailto:'
-            + MAILTO + '">' + MAILTO + '</a>.';
+          status.innerHTML = 'Something went wrong. Email me at <a href="mailto:' + MAILTO + '">' + MAILTO + '</a>.';
           status.className = 'asw-note is-error';
         })
         .then(function () { button.disabled = false; });
